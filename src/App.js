@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react'
+import { createGlobalStyle } from 'styled-components'
+import TodoTemplate from './components/TodoTemplate'
+import TodoHead from './components/TodoHead'
+import TodoList from './components/TodoList'
+import TodoCreate from './components/TodoCreate'
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    background: #e9ecef;
+  }
+`
 
 function App() {
+  const [num, setNum] = useState(localStorage.getItem('num') || 0)
+  function toDoInsert(value) {
+    localStorage.setItem(num, value)
+    localStorage.setItem('num', parseInt(num) + 1)
+    console.log(`on insert ${value}`)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <>
+      <GlobalStyle />
+      <TodoTemplate>
+        <TodoHead />
+        <TodoList />
+        <TodoCreate onInsert={toDoInsert} />
+      </TodoTemplate>
+    </>
+  )
 }
 
-export default App;
+export default App
