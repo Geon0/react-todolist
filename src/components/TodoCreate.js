@@ -77,23 +77,31 @@ const Input = styled.input`
 
 function TodoCreate(props) {
   const [open, setOpen] = useState(false)
-  const onToggle = () => setOpen(!open)
   const [toDo, setToDo] = useState('')
-  const [check, setCheck] = useState(false)
+  const onToggle = () => setOpen(!open)
+
+  const [inputs, setInputs] = useState({
+    id: 1,
+    todo: '',
+  })
+  const { id, todo } = inputs // 비구조화 할당을 통한 값 추출
 
   const InsertToDo = () => {
     if (props.onInsert) {
-      props.onInsert(toDo)
+      props.onInsert(inputs)
     }
-  }
-
-  const callData = () => {
-    setCheck(true)
+    setInputs({
+      ...inputs,
+      id: id + 1,
+    })
   }
 
   const onChange = e => {
-    setToDo(e.target.value)
-    // setCheck(false)
+    const { value } = e.target
+    setInputs({
+      ...inputs,
+      todo: value,
+    })
   }
 
   const onKeyPress = e => {
@@ -109,9 +117,7 @@ function TodoCreate(props) {
         <InsertFormPositioner>
           <InsertForm>
             <Input
-              type="text"
-              name="toDo"
-              value={toDo}
+              value={inputs.todo}
               onChange={onChange}
               autoFocus
               placeholder="할 일을 입력 후, Enter 를 누르세요"

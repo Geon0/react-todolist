@@ -58,12 +58,10 @@ const Text = styled.div`
 `
 
 function TodoItem({ id, done, text }) {
-  const [toDo, setToDo] = useState('')
-  const [array, setArray] = useState('')
   return (
     <TodoItemBlock>
       <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
-      {<Text done={done}>{toDo}</Text>}
+      {<Text done={done}>{text}</Text>}
       <Remove>
         <MdDelete />
       </Remove>

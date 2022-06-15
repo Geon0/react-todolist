@@ -8,11 +8,18 @@ const TodoListBlock = styled.div`
   padding-bottom: 48px;
   overflow-x: auto;
 `
+const array = []
+for (let i = 0; i < localStorage.length; i++) {
+  const item = localStorage.getItem(i)
+  array.push(item)
+}
 
 function TodoList() {
   return (
     <TodoListBlock>
-      <TodoItem text="프로젝트 생성하기" done={false} />
+      {array.map(data => (
+        <TodoItem data={data} done={false} />
+      ))}
     </TodoListBlock>
   )
 }
