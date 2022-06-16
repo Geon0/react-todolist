@@ -57,11 +57,12 @@ function TodoItem(props) {
   const item = props.item
 
   const deleteTodo = () => {
-    localStorage.removeItem(item.id)
+    props.deleteTodo(item.id)
   }
 
   const changeDone = () => {
-    props.changeDone(item.id, true)
+    const value = item.done == true ? false : true
+    props.changeDone(item.id, value)
   }
   return (
     <TodoItemBlock>

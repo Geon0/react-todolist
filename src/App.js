@@ -23,7 +23,7 @@ function App() {
     const findIndex = data.findIndex(e => e.id == id)
     let copyArray = [...data]
     if (findIndex != -1) {
-      copyArray[findIndex] = { ...copyArray[findIndex], done: 'true' }
+      copyArray[findIndex] = { ...copyArray[findIndex], done: value }
     }
     setData([...copyArray])
   }
