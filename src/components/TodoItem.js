@@ -54,15 +54,19 @@ const Text = styled.div`
     `}
 `
 function TodoItem({ item }) {
+  useEffect(() => {}, [item])
+
   const deleteTodo = () => {
     localStorage.removeItem(item.id)
-    console.log('id', item.id)
   }
 
   const changeDone = () => {
     const object = JSON.parse(localStorage.getItem(item.id))
-    object.done = true
-    console.log(object)
+    if (object.done) {
+      object.done = false
+    } else {
+      object.done = true
+    }
     localStorage.setItem(item.id, JSON.stringify(object))
   }
   return (

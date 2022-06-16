@@ -79,7 +79,6 @@ function TodoCreate(props) {
   const [open, setOpen] = useState(false)
   const [toDo, setToDo] = useState('')
   const onToggle = () => setOpen(!open)
-  const idx = localStorage.getItem('idx')
   const [inputs, setInputs] = useState({
     id: 0,
     todo: '',
