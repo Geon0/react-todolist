@@ -15,10 +15,19 @@ function TodoList(props) {
   const changeDone = (id, value) => {
     props.onChDone(id, value)
   }
+
+  const deleteTodo = id => {
+    props.onDeTodo(id)
+  }
   return (
     <TodoListBlock>
       {array.map(item => (
-        <TodoItem item={item} key={item.id} changeDone={changeDone} />
+        <TodoItem
+          item={item}
+          key={item.id}
+          changeDone={changeDone}
+          deleteTodo={deleteTodo}
+        />
       ))}
     </TodoListBlock>
   )

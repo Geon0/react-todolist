@@ -28,12 +28,16 @@ function App() {
     setData([...copyArray])
   }
 
+  const onDeTodo = id => {
+    const newData = data.filter(number => number.id !== id)
+    setData(newData)
+  }
   return (
     <>
       <GlobalStyle />
       <TodoTemplate>
         <TodoHead todoList={data} />
-        <TodoList todoList={data} onChDone={onChDone} />
+        <TodoList todoList={data} onChDone={onChDone} onDeTodo={onDeTodo} />
         <TodoCreate onCreate={onCreate} />
       </TodoTemplate>
     </>

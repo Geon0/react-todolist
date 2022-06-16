@@ -23,14 +23,12 @@ const TodoHeadBlock = styled.div`
   }
 `
 
-const TodoHead = () => {
+const TodoHead = props => {
   const [date, setDate] = useState('')
   const [day, setDay] = useState('')
-  const [toDo, setToDo] = useState(0)
 
   useEffect(() => {
     currentTime()
-    getItem()
   }, [])
 
   const currentTime = () => {
@@ -50,29 +48,16 @@ const TodoHead = () => {
     setDay(day)
   }
 
-  const getItem = () => {
-    let item = window.localStorage.getItem('id')
-    setToDo(item)
-  }
+  const data = props.todoList
+  const numValue = data.filter(value => value.done !== true)
 
   return (
     <TodoHeadBlock>
       <div className="day">{date}</div>
       <div className="day">{day}</div>
-      <div className="tasks-left">할일 {toDo}개남음</div>
+      <div className="tasks-left">할일 {numValue.length}개남음</div>
     </TodoHeadBlock>
   )
 }
 
 export default TodoHead
-
-/*
-function callback(){
-}
-// <button onClick={currentTime}>Click</button> <=> window.addEventListener("click", callback);
-
-function callback2(param){
-}
-
-<button onClick={()  => {callback2(78); }}>Click</button> <=> <button onClick={callback2.bind(this, 45)}>Click</button> = window.addEventListener("click", callback2.bind(this, 45))
-*/
