@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import styled, { css } from 'styled-components'
 import { MdDone, MdDelete } from 'react-icons/md'
-import { useState } from 'react'
 const Remove = styled.div`
   display: flex;
   align-items: center;
@@ -26,7 +25,6 @@ const TodoItemBlock = styled.div`
     }
   }
 `
-
 const CheckCircle = styled.div`
   width: 32px;
   height: 32px;
@@ -45,7 +43,6 @@ const CheckCircle = styled.div`
       color: #38d9a9;
     `}
 `
-
 const Text = styled.div`
   flex: 1;
   font-size: 21px;
@@ -56,13 +53,25 @@ const Text = styled.div`
       color: #ced4da;
     `}
 `
+function TodoItem({ item }) {
+  const deleteTodo = () => {
+    localStorage.removeItem(item.id)
+    console.log('id', item.id)
+  }
 
-function TodoItem({ id, done, text }) {
+  const changeDone = () => {
+    const object = JSON.parse(localStorage.getItem(item.id))
+    object.done = true
+    console.log(object)
+    localStorage.setItem(item.id, JSON.stringify(object))
+  }
   return (
     <TodoItemBlock>
-      <CheckCircle done={done}>{done && <MdDone />}</CheckCircle>
-      {<Text done={done}>{text}</Text>}
-      <Remove>
+      <CheckCircle onClick={changeDone} done={item.done}>
+        {item.done && <MdDone />}
+      </CheckCircle>
+      {<Text done={item.done}> {item.todo}</Text>}
+      <Remove onClick={deleteTodo}>
         <MdDelete />
       </Remove>
     </TodoItemBlock>

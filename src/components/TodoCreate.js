@@ -79,10 +79,11 @@ function TodoCreate(props) {
   const [open, setOpen] = useState(false)
   const [toDo, setToDo] = useState('')
   const onToggle = () => setOpen(!open)
-
+  const idx = localStorage.getItem('idx')
   const [inputs, setInputs] = useState({
-    id: 1,
+    id: 0,
     todo: '',
+    done: false,
   })
   const { id, todo } = inputs // 비구조화 할당을 통한 값 추출
 
