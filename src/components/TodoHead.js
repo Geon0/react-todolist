@@ -51,7 +51,7 @@ const TodoHead = () => {
   }
 
   const getItem = () => {
-    let item = window.localStorage.length
+    let item = window.localStorage.getItem('id')
     setToDo(item)
   }
 

@@ -9,18 +9,16 @@ const TodoListBlock = styled.div`
   overflow-x: auto;
 `
 
-function TodoList({}) {
-  const array = []
-  for (let i = 0; i < localStorage.length; i++) {
-    array.push(JSON.parse(localStorage.getItem(i)))
-  }
-  useEffect(() => {}, [array])
+function TodoList(props) {
+  const array = props.todoList
 
-  const getItem = () => {}
+  const changeDone = (id, value) => {
+    props.onChDone(id, value)
+  }
   return (
     <TodoListBlock>
       {array.map(item => (
-        <TodoItem item={item} key={item.id} />
+        <TodoItem item={item} key={item.id} changeDone={changeDone} />
       ))}
     </TodoListBlock>
   )

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import TodoTemplate from './components/TodoTemplate'
 import TodoHead from './components/TodoHead'
@@ -12,18 +12,29 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
-  const [num, setNum] = useState(localStorage.getItem('num') || 0)
-  function toDoInsert(value) {
-    localStorage.setItem(value.id, JSON.stringify(value))
+  const [data, setData] = useState([])
+
+  const onCreate = todo => {
+    data.push({ id: data.length, todo: todo, done: false })
+    setData([...data])
+  }
+
+  const onChDone = (id, value) => {
+    const findIndex = data.findIndex(e => e.id == id)
+    let copyArray = [...data]
+    if (findIndex != -1) {
+      copyArray[findIndex] = { ...copyArray[findIndex], done: 'true' }
+    }
+    setData([...copyArray])
   }
 
   return (
     <>
       <GlobalStyle />
       <TodoTemplate>
-        <TodoHead />
-        <TodoList />
-        <TodoCreate onInsert={toDoInsert} />
+        <TodoHead todoList={data} />
+        <TodoList todoList={data} onChDone={onChDone} />
+        <TodoCreate onCreate={onCreate} />
       </TodoTemplate>
     </>
   )

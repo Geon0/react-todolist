@@ -53,21 +53,15 @@ const Text = styled.div`
       color: #ced4da;
     `}
 `
-function TodoItem({ item }) {
-  useEffect(() => {}, [item])
+function TodoItem(props) {
+  const item = props.item
 
   const deleteTodo = () => {
     localStorage.removeItem(item.id)
   }
 
   const changeDone = () => {
-    const object = JSON.parse(localStorage.getItem(item.id))
-    if (object.done) {
-      object.done = false
-    } else {
-      object.done = true
-    }
-    localStorage.setItem(item.id, JSON.stringify(object))
+    props.changeDone(item.id, true)
   }
   return (
     <TodoItemBlock>

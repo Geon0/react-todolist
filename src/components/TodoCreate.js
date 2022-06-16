@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import styled, { css } from 'styled-components'
 import { MdAdd } from 'react-icons/md'
 
@@ -79,29 +79,19 @@ function TodoCreate(props) {
   const [open, setOpen] = useState(false)
   const [toDo, setToDo] = useState('')
   const onToggle = () => setOpen(!open)
-  const [inputs, setInputs] = useState({
-    id: 0,
-    todo: '',
-    done: false,
-  })
-  const { id, todo } = inputs // 비구조화 할당을 통한 값 추출
+
+  const inputRef = useRef(null)
 
   const InsertToDo = () => {
-    if (props.onInsert) {
-      props.onInsert(inputs)
+    if (props.onCreate) {
+      const input = inputRef.current // == input
+      props.onCreate(input.value)
+      input.value = ''
     }
-    setInputs({
-      ...inputs,
-      id: id + 1,
-    })
   }
 
   const onChange = e => {
     const { value } = e.target
-    setInputs({
-      ...inputs,
-      todo: value,
-    })
   }
 
   const onKeyPress = e => {
@@ -117,8 +107,8 @@ function TodoCreate(props) {
         <InsertFormPositioner>
           <InsertForm>
             <Input
-              value={inputs.todo}
-              onChange={onChange}
+              ref={inputRef}
+              defaultValue=""
               autoFocus
               placeholder="할 일을 입력 후, Enter 를 누르세요"
               onKeyPress={onKeyPress}
