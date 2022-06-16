@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { createGlobalStyle } from 'styled-components'
 import TodoTemplate from './components/TodoTemplate'
 import TodoHead from './components/TodoHead'
@@ -12,7 +12,17 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
-  const [data, setData] = useState([])
+  const [data, setData] = useState(() => {
+    const saved = localStorage.getItem('data')
+    if (saved !== null) {
+      return JSON.parse(saved)
+    } else {
+      return ['']
+    }
+  })
+  useEffect(() => {
+    const saved = localStorage.setItem('data', JSON.stringify(data))
+  }, [data])
 
   const onCreate = todo => {
     data.push({ id: data.length, todo: todo, done: false })
@@ -25,6 +35,7 @@ function App() {
     if (findIndex != -1) {
       copyArray[findIndex] = { ...copyArray[findIndex], done: value }
     }
+
     setData([...copyArray])
   }
 
