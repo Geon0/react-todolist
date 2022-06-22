@@ -90,10 +90,6 @@ function TodoCreate(props) {
     }
   }
 
-  const onChange = e => {
-    const { value } = e.target
-  }
-
   const onKeyPress = e => {
     if (e.key == 'Enter') {
       InsertToDo()

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { useState } from 'react'
 
@@ -21,11 +21,18 @@ const TodoHeadBlock = styled.div`
     margin-top: 40px;
     font-weight: bold;
   }
+  .tasks-search {
+    color: #20c997;
+    font-size: 18px;
+    font-weight: bold;
+    float: right;
+  }
 `
 
 const TodoHead = props => {
   const [date, setDate] = useState('')
   const [day, setDay] = useState('')
+  const [inputVal, setInputVal] = useState('')
 
   useEffect(() => {
     currentTime()
@@ -50,12 +57,41 @@ const TodoHead = props => {
 
   const data = props.todoList
   const numValue = data.filter(value => value.done !== true)
+  const searchRef = useRef(null)
 
+  const onChange = e => {
+    setInputVal(e.target.value)
+  }
+
+  const onSearch = e => {
+    if (props.onSearch) {
+      const search = e.target.value
+      props.onSearch(search)
+    }
+  }
+
+  const onKeyPress = e => {
+    if (e.key == 'Enter') {
+      onSearch(e)
+    }
+  }
   return (
     <TodoHeadBlock>
       <div className="day">{date}</div>
       <div className="day">{day}</div>
-      <div className="tasks-left">할일 {numValue.length}개남음</div>
+      <div className="tasks-left">
+        할일 {numValue.length}개남음
+        <input
+          ref={searchRef}
+          className="tasks-search "
+          onChange={e => {
+            onChange(e)
+          }}
+          onKeyPress={onKeyPress}
+          type="text"
+          value={inputVal}
+        />
+      </div>
     </TodoHeadBlock>
   )
 }

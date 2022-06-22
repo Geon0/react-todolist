@@ -35,7 +35,6 @@ function App() {
     if (findIndex != -1) {
       copyArray[findIndex] = { ...copyArray[findIndex], done: value }
     }
-
     setData([...copyArray])
   }
 
@@ -43,11 +42,16 @@ function App() {
     const newData = data.filter(number => number.id !== id)
     setData(newData)
   }
+
+  const onSearch = value => {
+    const findIndex = data.filter(data => data.todo == value)
+    setData(findIndex)
+  }
   return (
     <>
       <GlobalStyle />
       <TodoTemplate>
-        <TodoHead todoList={data} />
+        <TodoHead todoList={data} onSearch={onSearch} />
         <TodoList todoList={data} onChDone={onChDone} onDeTodo={onDeTodo} />
         <TodoCreate onCreate={onCreate} />
       </TodoTemplate>
