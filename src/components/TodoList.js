@@ -12,9 +12,8 @@ const TodoListBlock = styled.div`
 function TodoList(props) {
   const array = props.todoList
   const searchArray = props.searchList
-  const result = searchArray !== null ? searchArray : array
-  console.log('search', searchArray)
-  console.log('result', result)
+  const result = searchArray.length != 0 ? searchArray : array
+  console.log('search', result)
 
   const changeDone = (id, value) => {
     props.onChDone(id, value)
