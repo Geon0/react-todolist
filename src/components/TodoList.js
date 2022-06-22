@@ -11,6 +11,10 @@ const TodoListBlock = styled.div`
 
 function TodoList(props) {
   const array = props.todoList
+  const searchArray = props.searchList
+  const result = searchArray !== null ? searchArray : array
+  console.log('search', searchArray)
+  console.log('result', result)
 
   const changeDone = (id, value) => {
     props.onChDone(id, value)
@@ -21,7 +25,7 @@ function TodoList(props) {
   }
   return (
     <TodoListBlock>
-      {array.map(item => (
+      {result.map(item => (
         <TodoItem
           item={item}
           key={item.id}

@@ -20,6 +20,15 @@ function App() {
       return ['']
     }
   })
+  const [searchData, setSearchData] = useState(() => {
+    const saved = localStorage.getItem('data')
+    if (saved !== null) {
+      return JSON.parse(saved)
+    } else {
+      return ['']
+    }
+  })
+
   useEffect(() => {
     const saved = localStorage.setItem('data', JSON.stringify(data))
   }, [data])
@@ -44,15 +53,21 @@ function App() {
   }
 
   const onSearch = value => {
-    const findIndex = data.filter(data => data.todo == value)
-    setData(findIndex)
+    const newData = data.filter(data => data.todo == value)
+    setSearchData([...newData])
   }
+
   return (
     <>
       <GlobalStyle />
       <TodoTemplate>
         <TodoHead todoList={data} onSearch={onSearch} />
-        <TodoList todoList={data} onChDone={onChDone} onDeTodo={onDeTodo} />
+        <TodoList
+          todoList={data}
+          onChDone={onChDone}
+          onDeTodo={onDeTodo}
+          searchList={searchData}
+        />
         <TodoCreate onCreate={onCreate} />
       </TodoTemplate>
     </>
