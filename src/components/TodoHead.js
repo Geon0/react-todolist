@@ -25,7 +25,8 @@ const TodoHeadBlock = styled.div`
     color: #20c997;
     font-size: 18px;
     font-weight: bold;
-    float: right;
+    float: left;
+    margin-top: 10%;
   }
 `
 
@@ -81,7 +82,11 @@ const TodoHead = props => {
       <div className="day">{day}</div>
       <div className="tasks-left">
         할일 {numValue.length}개남음
-        <input
+      </div>
+      <div className="tasks-left">
+        현재까지 작성한 TODO 갯수 {props.counter}
+      </div>
+      <input
           ref={searchRef}
           className="tasks-search "
           onChange={e => {
@@ -90,8 +95,7 @@ const TodoHead = props => {
           onKeyPress={onKeyPress}
           type="text"
           value={inputVal}
-        />
-      </div>
+      />
     </TodoHeadBlock>
   )
 }

@@ -4,6 +4,7 @@ import TodoTemplate from './components/TodoTemplate'
 import TodoHead from './components/TodoHead'
 import TodoList from './components/TodoList'
 import TodoCreate from './components/TodoCreate'
+import {useDispatch, useSelector} from "react-redux";
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -12,6 +13,11 @@ const GlobalStyle = createGlobalStyle`
 `
 
 function App() {
+
+  const counter = useSelector(state => state.counter);
+  const content = useSelector(state => state.data);
+  const dispatch = useDispatch();
+
   const [data, setData] = useState(() => {
     const saved = localStorage.getItem('data')
     if (saved !== null) {
@@ -30,10 +36,11 @@ function App() {
   })
 
   useEffect(() => {
-    const saved = localStorage.setItem('data', JSON.stringify(data))
+    localStorage.setItem('data', JSON.stringify(data))
   }, [data])
 
   const onCreate = todo => {
+    dispatch({type:'save',data: { id: data.length, todo: todo, done: false },})
     data.push({ id: data.length, todo: todo, done: false })
     setData([...data])
   }
@@ -61,7 +68,7 @@ function App() {
     <>
       <GlobalStyle />
       <TodoTemplate>
-        <TodoHead todoList={data} onSearch={onSearch} />
+        <TodoHead todoList={data} onSearch={onSearch} counter={counter}/>
         <TodoList
           todoList={data}
           onChDone={onChDone}
